@@ -31,7 +31,7 @@ void Heap::pop() {
 		int ch1 = ncur*2, ch2 = ncur*2 + 1;  
 		if(ch1>cur && ch2>cur) break;
 		else if(ch1 <= cur && ch2 <= cur) {
-			if(arr[ch1]<arr[ch2] && arr[ch1]<arr[ncur]) {
+			if(arr[ch1]<=arr[ch2] && arr[ch1]<arr[ncur]) {
 				swap(arr[ch1],arr[ncur]);
 				ncur = ch1; 
 			}

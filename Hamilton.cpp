@@ -30,6 +30,7 @@ void HamiltonPath(int u) {
     return;
 }
 void Hamilton() {
+    freopen("input.txt","r",stdin);
     cin >> n >> m;
     for(int i  = 0; i<m; i++) {
         int x,y;

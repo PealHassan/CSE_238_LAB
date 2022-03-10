@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 vector<int>g[1010],deg(1010,0);
-vector<pair<int,int>>path;
+vector< pair<int,int> >path;
 int n,m,src = 1;
 int vis[1010][1010];
 bool isBridge(int u, int v) {
@@ -17,7 +17,7 @@ bool isBridge(int u, int v) {
             int temp = g[l][j];
             if(u == l && v == temp) continue;
             if(u == temp && v == l) continue;
-            if(!vis2[temp]) {
+            if(!vis[l][temp] && !vis2[temp]) {
                 vis2[temp] = 1;
                 cnt++;
                 q.push(temp);
@@ -29,10 +29,7 @@ bool isBridge(int u, int v) {
     return true;
 }
 void EulerTraverse(int u) {
-    if(path.size() == n) {
-            path.push_back({u,src});
-            return;
-    }
+    if(path.size() == m) return;
     vector<int>bridge;
     for(int i = 0; i<g[u].size(); i++) {
         int v = g[u][i];
@@ -40,12 +37,20 @@ void EulerTraverse(int u) {
         else if(!vis[u][v]){
             vis[u][v] = vis[v][u] = 1;
             path.push_back({u,v});
+            deg[u]--;
+            deg[v]--;
+            if(!deg[u]) n--;
+            if(!deg[v]) n--;
             EulerTraverse(v);
             return;
         }
     }
     if(bridge.size()) {
             vis[u][bridge[0]] = vis[bridge[0]][u] = 1;
+            deg[u]--;
+            deg[bridge[0]]--;
+            if(!deg[u]) n--;
+            if(!deg[bridge[0]]) n--;
             path.push_back({u,bridge[0]});
             EulerTraverse(bridge[0]);
     }
@@ -71,6 +76,7 @@ void Euler() {
     }
     if(cnt == 0 || cnt == 2) {
         EulerTraverse(src);
+        cout << "Euler Path :\n";
         for(int i = 0; i<path.size(); i++) {
                 if(i>0) cout << ",";
                 cout << path[i].first << "->" << path[i].second;
@@ -90,5 +96,15 @@ int main() {
 1 2
 2 3
 2 4
+3 4
+
+5 8
+1 5
+1 4
+1 2
+5 2
+5 4
+4 2
+2 3
 3 4
 */
